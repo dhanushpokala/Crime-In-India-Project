@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="E:/Projects/CrimeIndia.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="0"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="125"/><column_width id="3" width="23186"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,47:main01_District_wise_crimes_committed_IPC_2001_2012"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="01_District_wise_crimes_committed_IPC_2001_2012" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="135"/><column index="2" value="137"/><column index="3" value="43"/><column index="4" value="61"/><column index="5" value="134"/><column index="6" value="300"/><column index="7" value="42"/><column index="8" value="168"/><column index="9" value="65"/><column index="10" value="274"/><column index="11" value="67"/><column index="12" value="76"/><column index="13" value="44"/><column index="14" value="46"/><column index="15" value="176"/><column index="16" value="70"/><column index="17" value="110"/><column index="18" value="52"/><column index="19" value="145"/><column index="20" value="107"/><column index="21" value="300"/><column index="22" value="190"/><column index="23" value="249"/><column index="24" value="300"/><column index="25" value="195"/><column index="26" value="118"/><column index="27" value="117"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">SELECT Area_Name,(Sub_Group_Name), sum(K_A_Cases_Reported+K_A_Female_Total+K_A_Grand_Total+ K_A_Female_10_15_Years+ K_A_Female_15_18_Years
++K_A_Female_18_30_Years+K_A_Female_30_50_Years+K_A_Female_30_50_Years
++K_A_Female_Above_50_Years+K_A_Female_Upto_10_Years) as total_female ,(K_A_Male_10_15_Years+K_A_Male_15_18_Years+K_A_Male_18_30_Years+
+K_A_Male_30_50_Years+K_A_Male_Above_50_Years+K_A_Male_Total+K_A_Male_Upto_10_Years) as total_male ,sum(K_A_Cases_Reported+K_A_Female_Total+
+K_A_Grand_Total+ K_A_Female_10_15_Years+ K_A_Female_15_18_Years+K_A_Female_18_30_Years+K_A_Female_30_50_Years+K_A_Female_30_50_Years+
+K_A_Female_Above_50_Years+K_A_Female_Upto_10_Years+K_A_Male_10_15_Years+K_A_Male_15_18_Years+K_A_Male_18_30_Years+K_A_Male_30_50_Years+
+K_A_Male_Above_50_Years+K_A_Male_Total+K_A_Male_Upto_10_Years) as total_ FROM '39_Specific_purpose_of_kidnapping_and_abduction' GROUP BY Area_Name,Sub_Group_Name;</sql><sql name="SQL 2">SELECT Area_Name,sum(No_of_Cases_in_which_offenders_were_Relatives)  as offenders_were_Relatives 
+ from '21_Offenders_known_to_the_victim' GROUP BY Area_Name;
+</sql><sql name="SQL 4">SELECT 'TOTAL_2001_2012'.STATE,
+SUM('TOTAL_2013'.TOTAL+'TOTAL_2001_2012'.TOTAL) AS TOTAL_AGANIST_CHINDREN
+FROM (SELECT STATE,SUM(Total)AS TOTAL FROM '03_District_wise_crimes_committed_against_children_2001_2012'
+WHERE DISTRICT like '%TOTAL%' GROUP BY STATE) AS 'TOTAL_2001_2012'
+JOIN (SELECT upper(STATE)AS STATE,SUM(Total)AS TOTAL FROM '03_District_wise_crimes_committed_against_children_2013'
+WHERE DISTRICT like '%TOTAL%' GROUP BY STATE) AS 'TOTAL_2013'
+ON 'TOTAL_2001_2012'.STATE = &quot;TOTAL_2013&quot;.STATE
+GROUP BY 'TOTAL_2001_2012'.STATE  ORDER BY 'TOTAL_2001_2012'.STATE ASC</sql><sql name="SQL 2">SELECT Area_Name,sum(No_of_Cases_in_which_offenders_were_Relatives) as offenders_were_Relatives
+ from '21_Offenders_known_to_the_victim' GROUP BY Area_Name;
+</sql><sql name="SQL 3">SELECT * FROM ((SELECT Area_Name,(Family_back_ground_Homeless+Family_back_ground_Living_with_guardian+Family_back_ground_Living_with_parents+Family_back_ground_Total) 
+as family_total FROM '18_03_Juveniles_arrested_Family_background' GROUP BY Area_Name) 
+JOIN 
+(SELECT Area_Name, (Economic_Set_up_Annual_Income_250001_to_50000+Economic_Set_up_Annual_Income_upto_Rs_25000+Economic_Set_up_Middle_income_from_100001_to_200000+Economic_Set_up_Middle_income_from_50001_to_100000
++Economic_Set_up_Total+Economic_Set_up_Upper_income_above_Rs_300000+Economic_Set_up_Upper_middle_income_from_200001_to_300000) as economic_total 
+FROM '18_02_Juveniles_arrested_Economic_setup' GROUP BY Area_Name) USING(Area_Name) JOIN
+(SELECT Area_Name, 
+(Education_Illiterate+Education_Above_Primary_but_below_Matric_or_Higher_Secondary+Education_Above_Primary_but_below_Matric_or_Higher_Secondary
++Education_Matric_or_Higher_Secondary_above+Education_Total) as education_total FROM &quot;18_01_Juveniles_arrested_Education&quot; GROUP BY Area_Name)
+USING (Area_Name))</sql><sql name="SQL 4">SELECT 'TOTAL_2001_2012'.STATE,
+SUM('TOTAL_2013'.TOTAL+'TOTAL_2001_2012'.TOTAL) AS TOTAL_AGANIST_CHINDREN
+FROM (SELECT STATE,SUM(Total)AS TOTAL FROM '03_District_wise_crimes_committed_against_children_2001_2012'
+WHERE DISTRICT like '%TOTAL%' GROUP BY STATE) AS 'TOTAL_2001_2012'
+JOIN (SELECT upper(STATE)AS STATE,SUM(Total)AS TOTAL FROM '03_District_wise_crimes_committed_against_children_2013'
+WHERE DISTRICT like '%TOTAL%' GROUP BY STATE) AS 'TOTAL_2013'
+ON 'TOTAL_2001_2012'.STATE = &quot;TOTAL_2013&quot;.STATE
+GROUP BY 'TOTAL_2001_2012'.STATE  ORDER BY 'TOTAL_2001_2012'.STATE ASC</sql><sql name="SQL 5">SELECT '2001_2012'.STATES,
+SUM('2013'.TOTAL_OF_2013+'TOTAL_2014'.Total+'2001_2012'.Total_2001_2012) as TOTAL_AGANIST_WOMEN
+FROM (SELECT STATES,sum(Rape+DowryDeaths+Assaultonwomenwithintenttooutragehermodesty+
+InsulttomodestyofWomen+CrueltybyHusbandorhisRelatives+ImportationofGirls) 
+as Total_2001_2012 FROM '42_District_wise_crimes_committed_against_women_2001_2012'
+GROUP BY STATES)AS '2001_2012'
+INNER JOIN 
+(SELECT STATE,sum(tOTAL_OF_2013) AS TOTAL_OF_2013 FROM (SELECT UPPER(STATE) as STATE,
+sum(Rape+KidnappingandAbduction+DowryDeaths+Assaultonwomenwithintenttooutragehermodesty+InsulttomodestyofWomen+
+CrueltybyHusbandorhisRelatives+ImportationofGirls) as TOTAL_OF_2013 FROM '42_District_wise_crimes_committed_against_women_2013'
+GROUP BY STATE)GROUP BY STATE) AS &quot;2013&quot; 
+ON '2001_2012'.STATES = '2013'.STATE
+
+INNER JOIN
+(SELECT upper(States) AS STATE,sum(Rape+CustodialRape+Custodial_GangRape+Custodial_OtherRape+RapeotherthanCustodial+
+Rape_GangRape+Rape_Others+AttempttocommitRape+KidnappingAbduction_Total+KidnapingAbduction+KidnapingAbductioninordertoMurder
++KidnappingforRansom+KidnappingAbductionofWomentocompelherformarriage+KidnapingAbduction_Others+DowryDeaths+AssaultonWomenwithintenttooutrageherModesty_Total
++SexualHarassment+AssaultonwomenwithintenttoDisrobe+Voyeurism+Stalking+Others+InsulttotheModestyofWomen_Total+AtOfficepremises+InsulttotheModestyofWomen_Total
++AtOfficepremises+Inplacesrelatedtowork+InPublicTransportsystem+InotherPlaces+CrueltybyHusbandorhisRelatives+ImportationofGirlsfromForeignCountry+Murder+AttempttocommitMurder
++CulpableHomicidenotamountingtoMurder+AttempttocommitCulpableHomicide+GrievousHurt+Hurt+Acidattack+AttempttoAcidAttack+Deathscausedwithintenttocausemiscarriage
++Causingmiscarriagewithoutconsentofwomen+DacoitywithMurder+OtherDacoity+Robbery+Arson+HumanTrafficking+AbetmentofSuicidesofWomen+UnNaturalOffences+OtherIPCCrimes
++DowryProhibitionAct1961+ProtectionofWomenfromDomesticViolenceAct2005+ImmoralTrafficPreventionAct+ITPUnderSection5+ITPUnderSection6+ITPUnderSection7+
+ITPUnderSection8+ITPUnderOtherSections+OtherSLLCrimesagainstWomen) as Total FROM 'NEW_42_District_wise_crimes_committed_against_women_2014'
+GROUP by States) AS 'TOTAL_2014'
+ON  '2001_2012'.STATES = 'TOTAL_2014'.STATE
+GROUP by States</sql><sql name="SQL 6">SELECT sum(Victims_Above_50_Yrs)as total_Above_50Yrs,sum(Victims_Upto_10_15_Yrs)as total_Victims_between_10to15Yrs,
+sum(Victims_Upto_10_Yrs) as total_Victims_Upto_10_Yrs,sum(Victims_Upto_15_18_Yrs) as total_Victims_Upto_15_18_Yrs,
+sum(Victims_Upto_18_30_Yrs) as total_Victims_Upto_18_30_Yrs,sum(Victims_Upto_30_50_Yrs) AS total_Victims_Upto_30_50_Yrs  FROM '32_Murder_victim_age_sex'  ;
+-- SELECT * FROM &quot;32_Murder_victim_age_sex&quot;</sql><sql name="SQL 8">SELECT * FROM '23_Anti_corruprion_cases';
+SELECT * FROM '24_Anti_corruption_arrests';
+
+SELECT * FROM ((SELECT Area_Name ,sum(AC01_No_of_cases_pending_investigation_from_previous_year + AC02_No_of_cases_registered_during_the_year+ AC03_Total_No_of_cases_for_investigation_during_the_year+
+AC04_No_of_cases_investigated_during_the_year+AC05_No_of_cases_not_investigatedor_in_which_investigation_was_dropped_due_to_any_reason_during_the_year
++AC06_No_of_cases_transferred_to_local_police_during_the_year+AC06_No_of_cases_transferred_to_local_police_during_the_year+AC07_No_of_cases_declared_false_mistake_of_fact_or_of_law_or_non_cognizable_or_civil_in_nature
++AC08_No_of_cases_in_which_charge_sheets_were_laid_during_the_year+AC09_No_of_cases_pending_departmental_sanction_for_prosecution_during_the_year) as total_cases FROM '23_Anti_corruprion_cases' GROUP BY Area_Name)
+JOIN
+(SELECT Area_Name, sum(ACA01_No_of_persons_in_custody_or_on_bail_during_the_stage_of_investigation_at_the_beginning_of_the_year+ACA02_No_of_persons_arrested_during_the_year
++ACA04_No_of_persons_in_custody_or_on_bail_during_the_stage_of_investigation_at_the_end_of_the_year+ACA05_No_of_persons_in_whose_cases_charge_sheets_were_laid_during_the_year
++ACA06_No_of_persons_under_trial_at_the_beginning_of_the_year+ACA07_Total_No_of_persons_under_trial_during_the_year+ACA08_No_of_persons_whose_cases_were_withdrawn_or_otherwise_disposed_off_during_the_year+
+ACA09_No_of_persons_in_custody_or_on_bail_during_the_stage_of_trial_at_the_end_of_the_year+ACA10_No_of_persons_in_whose_cases_trials_were_completed_during_the_year
++ACA11_No_of_persons_convicted_during_the_year+ACA12_No_of_persons_acquitted_during_the_year+ACA13_Percentage_of_persons_convicted_to_total_persons_in_whose_cases_trials_were_completed_during_the_year+
+ACA14_No_of_persons_involved_in_the_cases_reported_for_Regular_Departmental_Action_during_the_year+ACA15_No_of_persons_involved_in_the_cases_reported_for_suitable_action_during_the_year
++ACA161_No_of_persons_dismissed_from_Service_during_the_year+ACA162_No_of_persons_removed_from_service_during_the_year+ACA162_No_of_persons_removed_from_service_during_the_year
++ACA163_No_of_persons_awarded_other_major_punishments_during_the_year+ACA164_No_of_persons_awarded_minor_punishments_during_the_year
++ACA19_No_of_private_persons_involved_during_the_year) as total_areest 
+FROM '24_Anti_corruption_arrests' GROUP BY Area_Name)
+USING (Area_Name));</sql><sql name="SQL 7">SELECT 'OCCURANCE_2001_2012'.STATE,
+('OCCURANCE_2001_2012'._TOTAL_BURGLARY+'OCCURANCE_2013'._BURGLARY+'OCCURANCE_2014'.__BURGLARY) as TOTAL_BURGLARY,
+('OCCURANCE_2013'._Robbery+'OCCURANCE_2001_2012'._TOTAL_Robbery+'OCCURANCE_2014'.__ROBBERY)AS TOTAL_ROBBERY,
+('OCCURANCE_2013'._Theft+'OCCURANCE_2001_2012'._TOTAL_Theft+'OCCURANCE_2014'.__Theft) AS TOTAL_THEFT,
+('OCCURANCE_2013'._Dacoity+'OCCURANCE_2001_2012'._TOTAL_Dacoity+'OCCURANCE_2014'.__Dacoity)AS TOTAL_DACOITY
+FROM
+
+(SELECT STATE AS STATE, sum(TOTAL_Burglary) AS _TOTAL_BURGLARY , sum(TOTAL_Dacoity) as _TOTAL_Dacoity,sum(TOTAL_Robbery) AS _TOTAL_Robbery,sum(TOTAL_Theft) AS _TOTAL_Theft
+FROM '17_Crime_by_place_of_occurrence_2001_2012' GROUP BY STATE) AS 'OCCURANCE_2001_2012'
+
+INNER JOIN
+(SELECT UPPER(STATE) AS STATE,sum(TOTAL_Burglary) AS _BURGLARY ,sum(TOTAL_Dacoity) as _Dacoity,sum(TOTAL_Robbery) AS _Robbery,sum(TOTAL_Theft) AS _Theft
+FROM '17_Crime_by_place_of_occurrence_2013' GROUP BY STATE)AS 'OCCURANCE_2013'
+
+ON &quot;OCCURANCE_2001_2012&quot;.STATE =&quot;OCCURANCE_2013&quot;.STATE
+
+INNER JOIN
+(SELECT upper(States) as STATE,sum(Total_Dacoity_Casesreported+Total_Dacoity_Valueofpropertystolen) as __Dacoity ,
+ sum(Total_Robbery_Casesreported+Total_Robbery_Valueofpropertystolen)AS __ROBBERY,
+sum(Total_Burglary_Casesreported+Total_Burglary_Valueofpropertystolen) AS __BURGLARY,sum(Total_Theft_Casesreported+
+Total_Theft_Casesreported+Total_Theft_Valueofpropertystolen) AS __Theft
+FROM &quot;17_Crime_by_place_of_occurrence_2014&quot; 
+GROUP BY STATE) AS &quot;OCCURANCE_2014&quot;
+ON &quot;OCCURANCE_2014&quot;.STATE =&quot;OCCURANCE_2013&quot;.STATE</sql><sql name="SQL 9">SELECT *,(&quot;Total_aganist_police&quot;.Total_aganist_police - &quot;Total_aganist_police&quot;.Cases_registered) as Cases_not_Registered 
+FROM
+(SELECT Area_Name,Cases_Registered,sum(Cases_Registered+Reported_Dept_Action+Complaints_False_True
++Complaints_Received_Alleged+Departmental_Enquiries+Magisterial_Enquiries+Trials_Charge_sheeted+Judicial_Enquiries
++Police_Personnel_Convicted+Personnel_sent_up_for_Trial+Personnel_Trial+Personnel_Withdrawn_or_Otherwise+personnel_Cases_Trial
++Personnel_Cases_Withdrawn_or_Otherwise+Personnel_Disciplinary_Action+Personnel_Dismissal_Removal+
+Personnel_Major_Punishment+Personnel_Minor_Punishment) as Total_aganist_police
+ FROM &quot;25_Complaints_against_police&quot;
+ GROUP by Area_Name) as Total_aganist_police</sql><sql name="SQL 10">SELECT &quot;CRIME_2001_2012&quot;.STATE,&quot;CRIME_2001_2012&quot;.TOTAL_2001_2012,&quot;CRIME_2013&quot;.TOTAL_2013,&quot;CRIME_2014&quot;.CRIME_2014,
+(&quot;CRIME_2001_2012&quot;.TOTAL_2001_2012+&quot;CRIME_2013&quot;.TOTAL_2013+&quot;CRIME_2014&quot;.CRIME_2014) AS TOTAL
+ FROM(SELECT STATE,SUM(TOTALIPCCRIMES)AS TOTAL_2001_2012 FROM &quot;01_District_wise_crimes_committed_IPC_2001_2012&quot; 
+GROUP BY STATE ) AS &quot;CRIME_2001_2012&quot;
+INNER JOIN 
+(SELECT UPPER(STATE)AS STATE,sum(TOTALIPCCRIMES) as TOTAL_2013 FROM &quot;01_District_wise_crimes_committed_IPC_2013&quot;
+GROUP BY STATE) AS &quot;CRIME_2013&quot;
+ON
+&quot;CRIME_2001_2012&quot;.STATE= &quot;CRIME_2013&quot;.STATE
+
+INNER JOIN
+(SELECT upper(States)AS STATE,SUM(TotalCognizableIPCcrimes)AS &quot;CRIME_2014&quot; FROM &quot;01_District_wise_crimes_committed_IPC_2014&quot;
+GROUP BY States) AS &quot;CRIME_2014&quot;
+ON
+&quot;CRIME_2001_2012&quot;.STATE= &quot;CRIME_2014&quot;.STATE</sql><current_tab id="8"/></tab_sql></sqlb_project>
